@@ -41,10 +41,10 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(url)
   }
 
-  // Redirect to dashboard if already logged in and trying to access login
+  // Redirect to home page if already logged in and trying to access login
   if (request.nextUrl.pathname === '/login' && user) {
     const url = request.nextUrl.clone()
-    url.pathname = '/dashboard'
+    url.pathname = '/'
     return NextResponse.redirect(url)
   }
 

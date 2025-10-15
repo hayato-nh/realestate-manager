@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { ArrowLeft, Save } from 'lucide-react'
 import { createClient } from '@/lib/supabase/client'
+import LogoutButton from '@/components/logout-button'
 
 const PREFECTURE_LIST = [
   '北海道',
@@ -161,6 +162,7 @@ export default function NewPropertyPage() {
               <ArrowLeft className="h-4 w-4" />
               ダッシュボード
             </Link>
+            <LogoutButton />
           </nav>
         </div>
       </header>

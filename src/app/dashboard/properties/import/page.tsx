@@ -7,6 +7,7 @@ import PdfUploader from '@/components/import/pdf-uploader'
 import PropertyMapper, { PropertyFormData } from '@/components/import/property-mapper'
 import { extractPropertyData, ExtractedPropertyData } from '@/lib/pdf-parser'
 import { createClient } from '@/lib/supabase/client'
+import LogoutButton from '@/components/logout-button'
 
 type Step = 'upload' | 'mapping' | 'success'
 
@@ -119,6 +120,7 @@ export default function ImportPage() {
               <ArrowLeft className="h-4 w-4" />
               ダッシュボード
             </Link>
+            <LogoutButton />
           </nav>
         </div>
       </header>

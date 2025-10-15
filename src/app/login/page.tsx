@@ -30,8 +30,8 @@ export default function LoginPage() {
         return
       }
 
-      // Login successful - redirect to dashboard
-      router.push('/dashboard')
+      // Login successful - redirect to home page
+      router.push('/')
       router.refresh()
     } catch {
       setError('予期しないエラーが発生しました')

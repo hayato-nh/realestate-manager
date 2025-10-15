@@ -1,6 +1,7 @@
 import { createClient } from '@/lib/supabase/server'
 import Link from 'next/link'
 import { FileUp, BarChart3, Building2, Plus } from 'lucide-react'
+import LogoutButton from '@/components/logout-button'
 
 export default async function DashboardPage() {
   const supabase = await createClient()
@@ -92,6 +93,7 @@ export default async function DashboardPage() {
             >
               ダッシュボード
             </Link>
+            <LogoutButton />
           </nav>
         </div>
       </header>

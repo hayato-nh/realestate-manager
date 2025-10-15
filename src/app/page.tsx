@@ -1,7 +1,15 @@
 import Link from 'next/link'
 import { Building2, Search, FileUp, BarChart3 } from 'lucide-react'
+import { createClient } from '@/lib/supabase/server'
+import LogoutButton from '@/components/logout-button'
 
-export default function Home() {
+export default async function Home() {
+  const supabase = await createClient()
+
+  // Check if user is logged in
+  const {
+    data: { user },
+  } = await supabase.auth.getUser()
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
       {/* Header */}
@@ -18,12 +26,24 @@ export default function Home() {
             >
               物件一覧
             </Link>
-            <Link
-              href="/login"
-              className="rounded-md bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-700"
-            >
-              ログイン
-            </Link>
+            {user ? (
+              <>
+                <Link
+                  href="/dashboard"
+                  className="text-sm font-medium text-gray-700 hover:text-gray-900"
+                >
+                  ダッシュボード
+                </Link>
+                <LogoutButton />
+              </>
+            ) : (
+              <Link
+                href="/login"
+                className="rounded-md bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-700"
+              >
+                ログイン
+              </Link>
+            )}
           </div>
         </div>
       </header>
@@ -47,13 +67,23 @@ export default function Home() {
               <Search className="h-5 w-5" />
               物件を探す
             </Link>
-            <Link
-              href="/login"
-              className="flex items-center gap-2 rounded-lg border-2 border-blue-600 bg-white px-8 py-4 text-lg font-semibold text-blue-600 hover:bg-blue-50"
-            >
-              <BarChart3 className="h-5 w-5" />
-              ダッシュボード
-            </Link>
+            {user ? (
+              <Link
+                href="/dashboard"
+                className="flex items-center gap-2 rounded-lg border-2 border-blue-600 bg-white px-8 py-4 text-lg font-semibold text-blue-600 hover:bg-blue-50"
+              >
+                <BarChart3 className="h-5 w-5" />
+                ダッシュボード
+              </Link>
+            ) : (
+              <Link
+                href="/login"
+                className="flex items-center gap-2 rounded-lg border-2 border-blue-600 bg-white px-8 py-4 text-lg font-semibold text-blue-600 hover:bg-blue-50"
+              >
+                <BarChart3 className="h-5 w-5" />
+                ログイン
+              </Link>
+            )}
           </div>
 
           {/* Features */}
