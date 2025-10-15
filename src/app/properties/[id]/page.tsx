@@ -1,6 +1,7 @@
 import { createClient } from '@/lib/supabase/server'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
+import Image from 'next/image'
 import { ArrowLeft, MapPin, Home, Maximize, Calendar, Building2 } from 'lucide-react'
 
 interface PropertyPageProps {
@@ -35,21 +36,23 @@ export default async function PropertyPage({ params }: PropertyPageProps) {
     notFound()
   }
 
-  const propertyTypeLabel = {
+  const propertyTypeLabels: Record<string, string> = {
     mansion: 'マンション',
     house: '一戸建て',
     land: '土地',
     shop: '店舗',
     office: '事務所',
-  }[property.property_type]
+  }
+  const propertyTypeLabel = propertyTypeLabels[property.property_type] || property.property_type
 
-  const transactionTypeLabel = {
+  const transactionTypeLabels: Record<string, string> = {
     sale: '売買',
     rent: '賃貸',
-  }[property.transaction_type]
+  }
+  const transactionTypeLabel = transactionTypeLabels[property.transaction_type] || property.transaction_type
 
   // Get main image or first image
-  const mainImage = property.hn_pi_property_images?.find((img) => img.is_main)
+  const mainImage = property.hn_pi_property_images?.find((img: { is_main: boolean }) => img.is_main)
   const imageUrl =
     mainImage?.image_url ||
     property.hn_pi_property_images?.[0]?.image_url ||
@@ -79,11 +82,12 @@ export default async function PropertyPage({ params }: PropertyPageProps) {
       <main className="container mx-auto px-4 py-8">
         <div className="mx-auto max-w-5xl">
           {/* Property Image */}
-          <div className="mb-8 overflow-hidden rounded-lg shadow-lg">
-            <img
+          <div className="relative mb-8 h-96 overflow-hidden rounded-lg shadow-lg">
+            <Image
               src={imageUrl}
               alt={property.name}
-              className="h-96 w-full object-cover"
+              fill
+              className="object-cover"
             />
           </div>
 

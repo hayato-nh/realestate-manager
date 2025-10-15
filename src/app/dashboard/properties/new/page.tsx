@@ -107,7 +107,7 @@ export default function NewPropertyPage() {
       }
 
       // Insert property
-      const { data: property, error: insertError } = await supabase
+      const { error: insertError } = await supabase
         .from('hn_pi_properties')
         .insert({
           name: formData.name,
