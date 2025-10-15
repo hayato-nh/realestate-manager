@@ -15,7 +15,7 @@ export async function middleware(request: NextRequest) {
           return request.cookies.getAll()
         },
         setAll(cookiesToSet) {
-          cookiesToSet.forEach(({ name, value, options }) =>
+          cookiesToSet.forEach(({ name, value }) =>
             request.cookies.set(name, value)
           )
           supabaseResponse = NextResponse.next({
@@ -34,17 +34,17 @@ export async function middleware(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser()
 
-  // Protect /test route - redirect to login if not authenticated
-  if (request.nextUrl.pathname.startsWith('/test') && !user) {
+  // Protect dashboard routes - redirect to login if not authenticated
+  if (request.nextUrl.pathname.startsWith('/dashboard') && !user) {
     const url = request.nextUrl.clone()
     url.pathname = '/login'
     return NextResponse.redirect(url)
   }
 
-  // Redirect to test page if already logged in and trying to access login
+  // Redirect to dashboard if already logged in and trying to access login
   if (request.nextUrl.pathname === '/login' && user) {
     const url = request.nextUrl.clone()
-    url.pathname = '/test'
+    url.pathname = '/dashboard'
     return NextResponse.redirect(url)
   }
 

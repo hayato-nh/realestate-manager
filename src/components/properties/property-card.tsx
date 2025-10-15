@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion'
 import Link from 'next/link'
+import Image from 'next/image'
 import { MapPin, Home, Maximize, Heart } from 'lucide-react'
 
 interface Property {
@@ -61,10 +62,11 @@ export default function PropertyCard({ property }: PropertyCardProps) {
         <div className="overflow-hidden rounded-lg bg-white shadow-md transition-shadow hover:shadow-xl">
           {/* Image */}
           <div className="relative h-48 overflow-hidden bg-gray-200">
-            <img
+            <Image
               src={imageUrl}
               alt={property.name}
-              className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+              fill
+              className="object-cover transition-transform duration-300 group-hover:scale-105"
             />
 
             {/* Badge */}

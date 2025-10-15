@@ -1,7 +1,6 @@
 'use client'
 
 import { useState } from 'react'
-import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { ArrowLeft, FileText } from 'lucide-react'
 import PdfUploader from '@/components/import/pdf-uploader'
@@ -12,7 +11,6 @@ import { createClient } from '@/lib/supabase/client'
 type Step = 'upload' | 'mapping' | 'success'
 
 export default function ImportPage() {
-  const router = useRouter()
   const supabase = createClient()
 
   const [step, setStep] = useState<Step>('upload')

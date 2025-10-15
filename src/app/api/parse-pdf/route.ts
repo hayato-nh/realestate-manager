@@ -26,7 +26,7 @@ async function parsePDF(data: Uint8Array): Promise<{ text: string; numPages: num
     const page = await pdfDocument.getPage(pageNum)
     const textContent = await page.getTextContent()
     const pageText = textContent.items
-      .map((item: any) => item.str)
+      .map((item) => ('str' in item ? item.str : ''))
       .join(' ')
     fullText += pageText + '\n'
   }
