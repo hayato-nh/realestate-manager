@@ -1,66 +1,108 @@
 import Link from 'next/link'
+import { Building2, Search, FileUp, BarChart3 } from 'lucide-react'
 
 export default function Home() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100">
-      <div className="w-full max-w-2xl space-y-8 rounded-lg bg-white p-12 shadow-xl">
-        <div className="text-center">
-          <h1 className="text-4xl font-bold tracking-tight text-gray-900">
-            不動産物件管理システム
-          </h1>
-          <p className="mt-4 text-lg text-gray-600">
-            RealEstate Manager - Powered by Next.js & Supabase
-          </p>
-        </div>
-
-        <div className="space-y-4 pt-8">
-          <div className="rounded-lg border border-blue-200 bg-blue-50 p-6">
-            <h2 className="mb-2 text-xl font-semibold text-blue-900">
-              🔐 認証テスト
-            </h2>
-            <p className="mb-4 text-sm text-gray-700">
-              Supabaseとの接続と認証機能をテストします。
-            </p>
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+      {/* Header */}
+      <header className="border-b bg-white shadow-sm">
+        <div className="container mx-auto flex h-16 items-center justify-between px-4">
+          <div className="flex items-center gap-2">
+            <Building2 className="h-8 w-8 text-blue-600" />
+            <h1 className="text-xl font-bold text-gray-900">RealEstate Manager</h1>
+          </div>
+          <div className="flex items-center gap-4">
+            <Link
+              href="/properties"
+              className="text-sm font-medium text-gray-700 hover:text-gray-900"
+            >
+              物件一覧
+            </Link>
             <Link
               href="/login"
-              className="inline-flex rounded-md bg-blue-600 px-6 py-3 text-sm font-semibold text-white hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+              className="rounded-md bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-700"
             >
-              ログインページへ
+              ログイン
             </Link>
           </div>
+        </div>
+      </header>
 
-          <div className="rounded-lg border border-purple-200 bg-purple-50 p-6">
-            <h2 className="mb-2 text-xl font-semibold text-purple-900">
-              📊 接続テストページ
-            </h2>
-            <p className="mb-4 text-sm text-gray-700">
-              データベース接続、認証、プロフィール取得をテストします。
-              <br />
-              <span className="font-semibold">※ログインが必要です</span>
-            </p>
+      {/* Hero Section */}
+      <main className="container mx-auto px-4 py-16">
+        <div className="mx-auto max-w-4xl text-center">
+          <h2 className="mb-6 text-5xl font-bold text-gray-900">
+            不動産物件管理システム
+          </h2>
+          <p className="mb-12 text-xl text-gray-600">
+            PDFから簡単インポート、効率的な物件管理、直感的な操作性
+          </p>
+
+          {/* CTA Buttons */}
+          <div className="mb-16 flex justify-center gap-4">
             <Link
-              href="/test"
-              className="inline-flex rounded-md bg-purple-600 px-6 py-3 text-sm font-semibold text-white hover:bg-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2"
+              href="/properties"
+              className="flex items-center gap-2 rounded-lg bg-blue-600 px-8 py-4 text-lg font-semibold text-white hover:bg-blue-700"
             >
-              テストページへ
+              <Search className="h-5 w-5" />
+              物件を探す
+            </Link>
+            <Link
+              href="/login"
+              className="flex items-center gap-2 rounded-lg border-2 border-blue-600 bg-white px-8 py-4 text-lg font-semibold text-blue-600 hover:bg-blue-50"
+            >
+              <BarChart3 className="h-5 w-5" />
+              ダッシュボード
             </Link>
           </div>
-        </div>
 
-        <div className="rounded-lg border border-gray-200 bg-gray-50 p-6">
-          <h3 className="mb-3 text-sm font-semibold text-gray-900">📝 セットアップ手順</h3>
-          <ol className="list-decimal space-y-2 pl-5 text-sm text-gray-700">
-            <li>.env.local にSupabaseの認証情報を設定</li>
-            <li>Supabase SQL Editorでマイグレーションを実行</li>
-            <li>Supabase Authenticationでユーザーを作成</li>
-            <li>上記のログインボタンからテスト</li>
-          </ol>
-        </div>
+          {/* Features */}
+          <div className="grid gap-8 md:grid-cols-3">
+            <div className="rounded-lg bg-white p-8 shadow-lg">
+              <div className="mb-4 inline-flex rounded-full bg-blue-100 p-4">
+                <FileUp className="h-8 w-8 text-blue-600" />
+              </div>
+              <h3 className="mb-3 text-xl font-semibold text-gray-900">
+                PDFインポート
+              </h3>
+              <p className="text-gray-600">
+                物件情報PDFを自動解析して、データを簡単に登録できます。
+              </p>
+            </div>
 
-        <div className="text-center text-xs text-gray-500">
-          <p>詳細は docs/DATABASE_SETUP.md をご確認ください</p>
+            <div className="rounded-lg bg-white p-8 shadow-lg">
+              <div className="mb-4 inline-flex rounded-full bg-green-100 p-4">
+                <Search className="h-8 w-8 text-green-600" />
+              </div>
+              <h3 className="mb-3 text-xl font-semibold text-gray-900">
+                高度な検索
+              </h3>
+              <p className="text-gray-600">
+                都道府県、市区町村、価格帯など、多様な条件で物件を検索。
+              </p>
+            </div>
+
+            <div className="rounded-lg bg-white p-8 shadow-lg">
+              <div className="mb-4 inline-flex rounded-full bg-purple-100 p-4">
+                <BarChart3 className="h-8 w-8 text-purple-600" />
+              </div>
+              <h3 className="mb-3 text-xl font-semibold text-gray-900">
+                管理ダッシュボード
+              </h3>
+              <p className="text-gray-600">
+                物件の統計情報や最近の活動を一目で確認できます。
+              </p>
+            </div>
+          </div>
         </div>
-      </div>
+      </main>
+
+      {/* Footer */}
+      <footer className="mt-16 border-t bg-white py-8">
+        <div className="container mx-auto px-4 text-center text-sm text-gray-600">
+          <p>Powered by Next.js 15 & Supabase</p>
+        </div>
+      </footer>
     </div>
   )
 }

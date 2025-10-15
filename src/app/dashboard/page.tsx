@@ -1,6 +1,6 @@
 import { createClient } from '@/lib/supabase/server'
 import Link from 'next/link'
-import { FileUp, BarChart3, Building2 } from 'lucide-react'
+import { FileUp, BarChart3, Building2, Plus } from 'lucide-react'
 
 export default async function DashboardPage() {
   const supabase = await createClient()
@@ -167,7 +167,22 @@ export default async function DashboardPage() {
           <h2 className="mb-4 text-xl font-semibold text-gray-900">
             クイックアクション
           </h2>
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+            <Link
+              href="/dashboard/properties/new"
+              className="flex items-center gap-4 rounded-lg border bg-white p-6 shadow-sm transition-shadow hover:shadow-md"
+            >
+              <div className="rounded-full bg-green-100 p-3">
+                <Plus className="h-6 w-6 text-green-600" />
+              </div>
+              <div>
+                <h3 className="font-semibold text-gray-900">手入力で登録</h3>
+                <p className="text-sm text-gray-600">
+                  フォームから物件を登録
+                </p>
+              </div>
+            </Link>
+
             <Link
               href="/dashboard/properties/import"
               className="flex items-center gap-4 rounded-lg border bg-white p-6 shadow-sm transition-shadow hover:shadow-md"

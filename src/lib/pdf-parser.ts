@@ -53,13 +53,13 @@ export function extractPropertyData(text: string): ExtractedPropertyData {
   }
 
   // 物件名を抽出（「物件名：」の後、次のキーワードまたは改行まで）
-  const nameMatch = text.match(/物件名\s*[：:]\s*([^住価面間築マ一売賃\n\r]+?)(?=\s*(?:住所|価格|面積|間取り|築|マンション|一戸建て|売買|賃貸|\n|$))/)
+  const nameMatch = text.match(/物件名\s*[：:]\s*([^\n\r]+?)(?=\s*(?:住所|価格|面積|間取り|築|マンション|一戸建て|売買|賃貸|\n\n|$))/)
   if (nameMatch) {
     result.name = nameMatch[1].trim()
   }
 
   // 住所を抽出（「住所：」の後、次のキーワードまで）
-  const addressMatch = text.match(/(?:住所|所在地)\s*[：:]\s*([^価面間築マ一売賃\n\r]+?)(?=\s*(?:価格|面積|間取り|築|マンション|一戸建て|売買|賃貸|\n|$))/)
+  const addressMatch = text.match(/(?:住所|所在地)\s*[：:]\s*([^\n\r]+?)(?=\s*(?:価格|面積|間取り|築|マンション|一戸建て|売買|賃貸|\n\n|$))/)
   if (addressMatch) {
     const fullAddress = addressMatch[1].trim()
 
@@ -116,10 +116,10 @@ export function extractPropertyData(text: string): ExtractedPropertyData {
     }
   }
 
-  // 価格を抽出（万円、円）
-  const priceMatch = text.match(/(?:価格|金額|賃料)\s*[：:]\s*([0-9,]+)\s*(万\s*円|円)/)
+  // 価格を抽出（万円、円） - スペースを許容
+  const priceMatch = text.match(/(?:価格|金額|賃料)\s*[：:]\s*([0-9,\s]+?)\s*(万\s*円|円)/)
   if (priceMatch) {
-    const priceStr = priceMatch[1].replace(/,/g, '')
+    const priceStr = priceMatch[1].replace(/[,\s]/g, '')
     const priceValue = parseInt(priceStr)
     const unit = priceMatch[2].replace(/\s/g, '')
     // 万円の場合は10000倍
@@ -130,19 +130,20 @@ export function extractPropertyData(text: string): ExtractedPropertyData {
     }
   }
 
-  // 面積を抽出（㎡、平米）
-  const areaMatch = text.match(/(?:面積|専有面積)\s*[：:]\s*([0-9.]+)\s*(?:㎡|平米|m2|m²)/)
+  // 面積を抽出（㎡、平米、m²） - スペースを許容
+  const areaMatch = text.match(/(?:面積|専有面積)\s*[：:]\s*([0-9.\s]+?)\s*(?:㎡|平米|m2|m²|㎡)/)
   if (areaMatch) {
-    result.area_sqm = parseFloat(areaMatch[1])
+    const areaStr = areaMatch[1].replace(/\s/g, '')
+    result.area_sqm = parseFloat(areaStr)
   }
 
-  // 間取りを抽出（1K、2LDK など）
-  const layoutMatch = text.match(/(?:間取り)\s*[：:]\s*([0-9]+[RLDK]+)/)
+  // 間取りを抽出（1K、2LDK など） - スペースを許容
+  const layoutMatch = text.match(/(?:間取り)\s*[：:]\s*([0-9]+\s*[RLDK]+)/)
   if (layoutMatch) {
-    result.layout = layoutMatch[1]
+    result.layout = layoutMatch[1].replace(/\s/g, '')
   }
 
-  // 築年数を抽出
+  // 築年数を抽出 - スペースを許容
   const buildingAgeMatch = text.match(/築\s*([0-9]+)\s*年/)
   if (buildingAgeMatch) {
     result.building_age = parseInt(buildingAgeMatch[1])
